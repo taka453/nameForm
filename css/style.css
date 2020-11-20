@@ -1,0 +1,31 @@
+.content {
+    display: flex;
+    margin-left: 20px;
+}
+
+.right {
+    margin-right: 20px;
+}
+
+.text {
+    padding: 5px 5px 5px 0;
+}
+
+.error_message {
+    color: #F00;
+}
+
+.btn {
+    padding: 4px 15px;
+    background: #00F;
+    color: #FFF;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: solid 1px #eee;
+}
+
+.btn:hover {
+    background: #FFF;
+    color: #00F;
+}
