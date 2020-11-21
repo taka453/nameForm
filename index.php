@@ -1,61 +1,44 @@
 <?php
 
-$dsn = 'mysql:dbname=practice;host=localhost;charset=utf8';
-$user = 'root';
-$password = '';
+require_once "dbconnection.php";
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
+    $firstName = $_POST['firstName'];
 
     $error_message = array();
 
-    if($firstName == '') {
+    if($lastName == '') {
         $error_message[] = '苗字を入力してください。';
     }
 
-    if($lastName == '') {
+    if($firstName == '') {
         $error_message[] = '名前を入力してください。';
     }
 
-    if(!preg_match('/^[ァ-ヶー]+$/u', $firstName)) {
+    if(!preg_match('/^[ァ-ヶー]+$/u', $lastName)) {
         $error_message[] = '苗字をカタカナで入力してください。';
     }
 
-    if(!preg_match('/^[ァ-ヶー]+$/u', $lastName)) {
+    if(!preg_match('/^[ァ-ヶー]+$/u', $firstName)) {
         $error_message[] = '名前をカタカナで入力してください。';
     }
 }
 
-try {
-    if(empty($error_message)) {
-        $dbh = new PDO($dsn, $user, $password);
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO nameForm (lastName, firstName) VALUE (:lastName, :firstName)";
-        $stmh = $dbh->prepare($sql);
-        $stmh->bindValue(':lastName', $lastName, PDO::PARAM_STR);
-        $stmh->bindValue(':firstName', $firstName, PDO::PARAM_STR);
-        $stmh->execute();
-    }
-} catch(PDOException $e) {
-    print($e->getMessage());
-    die();
+if(empty($error_message)) {
+    $sql = "INSERT INTO nameForm (lastName, firstName) VALUE (:lastName, :firstName)";
+    $stmh = $dbh->prepare($sql);
+    $stmh->bindValue(':lastName', $lastName, PDO::PARAM_STR);
+    $stmh->bindValue(':firstName', $firstName, PDO::PARAM_STR);
+    $stmh->execute();
 }
 
-try {
-    $dbh = new PDO($dsn, $user, $password);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT * FROM nameForm";
-    $stmt = $dbh->prepare($sql);
-    $stmt->execute();
-    while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $data[] = $row;
-    }
-} catch(PDOException $e) {
-    print($e->getMessage());
-    die();
+$sql = "SELECT * FROM nameForm";
+$stmt = $dbh->prepare($sql);
+$stmt->execute();
+while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $data[] = $row;
 }
-
 
 ?>
 
