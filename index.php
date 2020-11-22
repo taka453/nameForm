@@ -2,6 +2,9 @@
 
 require_once "dbconnection.php";
 
+$lastName = '';
+$firstName = '';
+
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $lastName = $_POST['lastName'];
     $firstName = $_POST['firstName'];
