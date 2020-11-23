@@ -74,10 +74,10 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     <?php foreach($data as $row): ?>
     <div class="content">
         <div class="right">
-            <p><?php echo $row['lastName']; ?></p>
+            <p><?php echo htmlspecialchars($row['lastName'], ENT_QUOTES, 'UTF-8'); ?></p>
         </div>
         <div class="left">
-            <p><?php echo $row['firstName']; ?></p>
+            <p><?php echo htmlspecialchars($row['firstName'], ENT_QUOTES, 'UTF-8'); ?></p>
         </div>
     </div>
     <?php endforeach; ?>
